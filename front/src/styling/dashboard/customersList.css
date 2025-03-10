@@ -6,6 +6,15 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.customer-row {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.customer-row:hover {
+  background-color: #f0f4ff;
+}
+
 /* Search and Filter Section */
 .filter-section {
   margin-bottom: 20px;
@@ -152,6 +161,25 @@
 /* Action Buttons */
 .actions-cell {
   white-space: nowrap;
+}
+
+.view-btn {
+  background-color: #4a6cfa;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-right: 5px;
+  transition: background-color 0.2s;
+}
+
+.view-btn:hover {
+  background-color: #3a5dda;
 }
 
 .edit-btn,

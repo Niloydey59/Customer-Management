@@ -9,6 +9,7 @@ const {
   createCustomer,
   updateCustomer,
   deleteCustomer,
+  getCustomerById,
 } = require("../controllers/customerController");
 const {
   validateCustomerCreation,
@@ -19,6 +20,9 @@ const customerRouter = express.Router();
 
 // /api/customers common path
 customerRouter.get("/", isLoggedIn, getCustomers);
+
+customerRouter.get("/detail/:id", isLoggedIn, getCustomerById);
+
 customerRouter.get("/filter-options", isLoggedIn, getFilterOptions);
 customerRouter.post(
   "/create",

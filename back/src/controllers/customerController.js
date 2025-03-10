@@ -102,6 +102,26 @@ const getCustomers = async (req, res, next) => {
   }
 };
 
+const getCustomerById = async (req, res, next) => {
+  try {
+    const customerId = req.params.id;
+
+    const customer = await findWithId(Customer, customerId);
+
+    if (!customer) {
+      return next(createError(404, "Customer not found"));
+    }
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "Customer fetched successfully",
+      payload: { customer },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Get a list of all unique values for each filter field
 // This is useful for populating dropdown menus in the frontend
 const getFilterOptions = async (req, res, next) => {
@@ -333,6 +353,7 @@ const deleteCustomer = async (req, res, next) => {
 
 module.exports = {
   getCustomers,
+  getCustomerById,
   getFilterOptions,
   createCustomer,
   updateCustomer,

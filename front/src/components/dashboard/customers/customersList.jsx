@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
+  FaEye,
   FaEdit,
   FaTrash,
   FaSearch,
@@ -21,6 +23,8 @@ const CustomersList = ({
   error,
   totalCustomers,
 }) => {
+  const navigate = useNavigate();
+
   const [filterOptions, setFilterOptions] = useState({
     CustomerCodes: [],
     Custypes: [],
@@ -158,6 +162,10 @@ const CustomersList = ({
         limit: newLimit,
       });
     }
+  };
+
+  const handleViewCustomer = (customerId) => {
+    navigate(`/dashboard/customers/${customerId}`);
   };
 
   // Update useEffect to include pagination parameters
@@ -482,7 +490,11 @@ const CustomersList = ({
           </thead>
           <tbody>
             {customers.map((customer) => (
-              <tr key={customer._id || customer.CusID}>
+              <tr
+                key={customer._id || customer.CusID}
+                className="customer-row"
+                onClick={() => handleViewCustomer(customer._id)}
+              >
                 <td>{customer.CustomerCode}</td>
                 <td>{customer.Name}</td>
                 <td>{customer.Email}</td>
@@ -496,9 +508,21 @@ const CustomersList = ({
                 <td>{customer.SalesPerson}</td>
                 <td className="actions-cell">
                   <button
+                    className="view-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleViewCustomer(customer._id);
+                    }}
+                    title="View Details"
+                  >
+                    <FaEye />
+                  </button>
+
+                  <button
                     className="edit-btn"
-                    onClick={() => {
+                    onClick={(e) => {
                       // Pass the entire customer object to the parent's onEdit handler
+                      e.stopPropagation();
                       onEdit(customer);
                     }}
                     title="Edit"
@@ -507,7 +531,8 @@ const CustomersList = ({
                   </button>
                   <button
                     className="delete-btn"
-                    onClick={async () => {
+                    onClick={async (e) => {
+                      e.stopPropagation();
                       try {
                         // Call parent's onDelete and wait for confirmation
                         await onDelete(customer._id);

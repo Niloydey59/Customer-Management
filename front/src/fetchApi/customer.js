@@ -32,7 +32,7 @@ export const getFilterOptions = async () => {
 // Get a single customer by ID
 export const getCustomerById = async (customerId) => {
   try {
-    const response = await api.get(`/customers/${customerId}`);
+    const response = await api.get(`/customers/detail/${customerId}`);
     return response.data.payload;
   } catch (error) {
     console.error(`Error fetching customer ${customerId}:`, error.message);

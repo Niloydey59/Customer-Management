@@ -7,6 +7,7 @@ import Login from "../pages/forms/Login";
 import Register from "../pages/forms/Register";
 import Dashboard from "../pages/Dashboard";
 import Layout from "../layouts/Layout";
+import CustomerDetail from "../pages/CustomertDetails";
 
 const AppRoutes = () => {
   return (
@@ -18,6 +19,8 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         {/* Dashboard */}
         <Route path="/dashboard" element={<Dashboard />} />
+        {/* Customer Details */}
+        <Route path="/dashboard/customers/:id" element={<CustomerDetail />} />
       </Route>
 
       {/* Login & Register */}

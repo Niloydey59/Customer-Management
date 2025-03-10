@@ -8,6 +8,7 @@ import {
   updateCustomer,
   deleteCustomer,
 } from "../../fetchApi/customer";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CustomersManagement = () => {
   const [customers, setCustomers] = useState([]);
