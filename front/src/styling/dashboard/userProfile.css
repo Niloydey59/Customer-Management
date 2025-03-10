@@ -1,0 +1,237 @@
+/* User Profile Component Styling */
+.user-profile {
+    width: 100%;
+  }
+  
+  .profile-tabs {
+    display: flex;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tab-button {
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #6c757d;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .tab-button:hover {
+    color: #4a6cfa;
+  }
+  
+  .tab-button.active {
+    color: #4a6cfa;
+    border-bottom-color: #4a6cfa;
+  }
+  
+  /* Common profile content styling */
+  .profile-content {
+    padding: 1rem 0;
+  }
+  
+  .message {
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .message.success {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border-left: 4px solid #20c997;
+  }
+  
+  .message.error {
+    background-color: #f8d7da;
+    color: #842029;
+    border-left: 4px solid #dc3545;
+  }
+  
+  /* Profile information */
+  .profile-info-container,
+  .change-password-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .profile-info-container h2,
+  .change-password-container h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: #343a40;
+  }
+  
+  .profile-details {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+  
+  .profile-field {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .field-label {
+    font-weight: 600;
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .field-value {
+    font-size: 1.1rem;
+  }
+  
+  .edit-profile-btn {
+    padding: 0.6rem 1rem;
+    background-color: #4a6cfa;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .edit-profile-btn:hover {
+    background-color: #3a5dda;
+    transform: translateY(-2px);
+  }
+  
+  /* Form styling */
+  .profile-form,
+  .password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group label {
+    font-weight: 600;
+    color: #343a40;
+    font-size: 0.95rem;
+  }
+  
+  .form-group small {
+    color: #6c757d;
+    font-size: 0.8rem;
+  }
+  
+  .form-group input {
+    padding: 0.75rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    transition: border-color 0.2s;
+    font-size: 1rem;
+  }
+  
+  .form-group input:focus {
+    outline: none;
+    border-color: #4a6cfa;
+    box-shadow: 0 0 0 3px rgba(74, 108, 250, 0.2);
+  }
+  
+  .form-group input:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  .cancel-btn {
+    padding: 0.6rem 1rem;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .cancel-btn:hover {
+    background-color: #e9ecef;
+  }
+  
+  .save-btn,
+  .change-pwd-btn {
+    padding: 0.6rem 1rem;
+    background-color: #4a6cfa;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex: 1;
+  }
+  
+  .save-btn:hover,
+  .change-pwd-btn:hover {
+    background-color: #3a5dda;
+    transform: translateY(-2px);
+  }
+  
+  .save-btn:disabled,
+  .change-pwd-btn:disabled {
+    background-color: #adb5bd;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  .password-input-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  
+  .password-toggle-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6c757d;
+    padding: 5px;
+  }
+  
+  .password-toggle-btn:hover {
+    color: #4a6cfa;
+  }
+  
+  @media (max-width: 768px) {
+    .profile-tabs {
+      flex-direction: column;
+      border-bottom: none;
+    }
+    
+    .tab-button {
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+    
+    .form-actions {
+      flex-direction: column;
+    }
+  }

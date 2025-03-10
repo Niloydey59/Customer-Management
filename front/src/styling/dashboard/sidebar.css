@@ -1,0 +1,622 @@
+/* Dashboard Layout */
+.dashboard-container {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+  }
+  
+  .dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  /* Sidebar Styles */
+  .sidebar {
+    width: 280px;
+    background-color: #212529;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+  }
+  
+  .sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #343a40;
+  }
+  
+  .app-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #4a6cfa;
+  }
+  
+  .sidebar-user {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid #343a40;
+  }
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #4a6cfa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  }
+  
+  .user-info {
+    overflow: hidden;
+  }
+  
+  .user-info h4 {
+    margin: 0;
+    font-size: 1rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  
+  .user-info p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #adb5bd;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  
+  .sidebar-menu {
+    flex: 1;
+    padding: 1.5rem 0;
+    overflow-y: auto;
+  }
+  
+  .sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar-menu button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    color: #adb5bd;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    gap: 0.75rem;
+  }
+  
+  .sidebar-menu button:hover {
+    background-color: #343a40;
+    color: #fff;
+  }
+  
+  .sidebar-menu button.active {
+    background-color: #4a6cfa;
+    color: #fff;
+  }
+  
+  .menu-icon {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sidebar-footer {
+    padding: 1.5rem;
+    border-top: 1px solid #343a40;
+  }
+  
+  .logout-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background-color: #343a40;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    gap: 0.75rem;
+  }
+  
+  .logout-button:hover {
+    background-color: #495057;
+  }
+  
+  /* Dashboard Content */
+  .dashboard-content {
+    flex: 1;
+    margin-left: 280px;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  
+  .content-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .content-header h1 {
+    margin: 0;
+    color: #212529;
+    font-size: 1.75rem;
+  }
+  
+  .content-body {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    padding: 2rem;
+  }
+  
+  /* User Profile Tab Styles */
+  .profile-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .tab-button {
+    padding: 0.75rem 1.25rem;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #6c757d;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  
+  .tab-button:hover {
+    color: #4a6cfa;
+  }
+  
+  .tab-button.active {
+    color: #4a6cfa;
+    border-bottom-color: #4a6cfa;
+  }
+  
+  /* Profile Info Form Styles */
+  .profile-info-container h2,
+  .change-password-container h2,
+  .customers-management h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #343a40;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #343a40;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: #4a6cfa;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 108, 250, 0.2);
+  }
+  
+  .form-group small {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  
+  .save-btn,
+  .change-pwd-btn,
+  .add-customer-btn {
+    padding: 0.75rem 1.5rem;
+    background-color: #4a6cfa;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .save-btn:hover,
+  .change-pwd-btn:hover,
+  .add-customer-btn:hover {
+    background-color: #3a5dda;
+    transform: translateY(-2px);
+  }
+  
+  .cancel-btn,
+  .edit-profile-btn {
+    padding: 0.75rem 1.5rem;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  
+  .cancel-btn:hover,
+  .edit-profile-btn:hover {
+    background-color: #e9ecef;
+  }
+  
+  .edit-profile-btn {
+    margin-top: 1.5rem;
+  }
+  
+  .message {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  
+  .message.success {
+    background-color: #d1e7dd;
+    color: #0f5132;
+  }
+  
+  .message.error {
+    background-color: #f8d7da;
+    color: #842029;
+  }
+  
+  /* Profile Details Display */
+  .profile-details {
+    margin-bottom: 1.5rem;
+  }// filepath: d:\4-1\CSE 4100\Project\front\src\styling\dashboard.css
+  /* Dashboard Layout */
+  .dashboard-container {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+  }
+  
+  .dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  /* Sidebar Styles */
+  .sidebar {
+    width: 280px;
+    background-color: #212529;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+  }
+  
+  .sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #343a40;
+  }
+  
+  .app-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #4a6cfa;
+  }
+  
+  .sidebar-user {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid #343a40;
+  }
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #4a6cfa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  }
+  
+  .user-info {
+    overflow: hidden;
+  }
+  
+  .user-info h4 {
+    margin: 0;
+    font-size: 1rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  
+  .user-info p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #adb5bd;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  
+  .sidebar-menu {
+    flex: 1;
+    padding: 1.5rem 0;
+    overflow-y: auto;
+  }
+  
+  .sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar-menu button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    color: #adb5bd;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    gap: 0.75rem;
+  }
+  
+  .sidebar-menu button:hover {
+    background-color: #343a40;
+    color: #fff;
+  }
+  
+  .sidebar-menu button.active {
+    background-color: #4a6cfa;
+    color: #fff;
+  }
+  
+  .menu-icon {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sidebar-footer {
+    padding: 1.5rem;
+    border-top: 1px solid #343a40;
+  }
+  
+  .logout-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background-color: #343a40;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    gap: 0.75rem;
+  }
+  
+  .logout-button:hover {
+    background-color: #495057;
+  }
+  
+  /* Dashboard Content */
+  .dashboard-content {
+    flex: 1;
+    margin-left: 280px;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  
+  .content-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .content-header h1 {
+    margin: 0;
+    color: #212529;
+    font-size: 1.75rem;
+  }
+  
+  .content-body {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    padding: 2rem;
+  }
+  
+  /* User Profile Tab Styles */
+  .profile-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .tab-button {
+    padding: 0.75rem 1.25rem;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #6c757d;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  
+  .tab-button:hover {
+    color: #4a6cfa;
+  }
+  
+  .tab-button.active {
+    color: #4a6cfa;
+    border-bottom-color: #4a6cfa;
+  }
+  
+  /* Profile Info Form Styles */
+  .profile-info-container h2,
+  .change-password-container h2,
+  .customers-management h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #343a40;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #343a40;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: #4a6cfa;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 108, 250, 0.2);
+  }
+  
+  .form-group small {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  
+  .save-btn,
+  .change-pwd-btn,
+  .add-customer-btn {
+    padding: 0.75rem 1.5rem;
+    background-color: #4a6cfa;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .save-btn:hover,
+  .change-pwd-btn:hover,
+  .add-customer-btn:hover {
+    background-color: #3a5dda;
+    transform: translateY(-2px);
+  }
+  
+  .cancel-btn,
+  .edit-profile-btn {
+    padding: 0.75rem 1.5rem;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  
+  .cancel-btn:hover,
+  .edit-profile-btn:hover {
+    background-color: #e9ecef;
+  }
+  
+  .edit-profile-btn {
+    margin-top: 1.5rem;
+  }
+  
+  .message {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  
+  .message.success {
+    background-color: #d1e7dd;
+    color: #0f5132;
+  }
+  
+  .message.error {
+    background-color: #f8d7da;
+    color: #842029;
+  }
+  
+  /* Profile Details Display */
+  .profile-details {
+    margin-bottom: 1.5rem;
+  }

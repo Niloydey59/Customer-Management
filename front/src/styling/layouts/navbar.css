@@ -1,0 +1,90 @@
+/* Navigation */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5%;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .logo a {
+    color: #4a6cfa;
+    text-decoration: none;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .nav-links a {
+    font-weight: 500;
+    transition: color 0.3s;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .nav-links a:hover {
+    color: #4a6cfa;
+  }
+  
+  .auth-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .home-login-btn, .home-register-btn, .dashboard-btn, .logout-btn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+  }
+  
+  .home-login-btn, .logout-btn {
+    color: #4a6cfa;
+    border: 1px solid #4a6cfa;
+    background-color: transparent;
+  }
+  
+  .home-login-btn:hover, .logout-btn:hover {
+    background-color: #f0f4ff;
+  }
+  
+  .home-register-btn, .dashboard-btn {
+    background-color: #4a6cfa;
+    color: white;
+    border: none;
+  }
+  
+  .home-register-btn:hover, .dashboard-btn:hover {
+    background-color: #3a5dda;
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive styling */
+  @media (max-width: 768px) {
+    .nav-container {
+      flex-direction: column;
+      padding: 1rem;
+      gap: 1rem;
+    }
+    
+    .nav-links {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+  }

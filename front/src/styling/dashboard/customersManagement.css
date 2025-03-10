@@ -1,0 +1,107 @@
+/* Customer Management Styling */
+.customers-management {
+    width: 100%;
+  }
+  
+  .customers-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .customers-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #343a40;
+  }
+  
+  .add-customer-btn {
+    padding: 0.6rem 1rem;
+    background-color: #4a6cfa;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .add-customer-btn:hover {
+    background-color: #3a5dda;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Empty state */
+  .no-customers {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 8px;
+    color: #6c757d;
+  }
+  
+  /* Loading state */
+  .loading-indicator {
+    text-align: center;
+    padding: 2rem;
+    color: #6c757d;
+    font-style: italic;
+  }
+  
+  /* Error message */
+  .error-message {
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #dc3545;
+  }
+  
+  /* Customer form */
+  .customer-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .customer-form-container h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: #343a40;
+  }
+  
+  .customer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  .form-group textarea {
+    padding: 0.75rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    transition: border-color 0.2s;
+    font-size: 1rem;
+    resize: vertical;
+    font-family: inherit;
+  }
+  
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #4a6cfa;
+    box-shadow: 0 0 0 3px rgba(74, 108, 250, 0.2);
+  }
+  
+  /* Responsive for smaller screens */
+  @media (max-width: 768px) {
+    .customers-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }

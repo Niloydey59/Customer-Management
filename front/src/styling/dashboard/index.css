@@ -1,0 +1,5 @@
+/* Import all component styles */
+@import './sidebar.css';
+@import './userProfile.css';
+@import './customersManagement.css';
+@import './customersList.css';
