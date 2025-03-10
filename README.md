@@ -15,20 +15,20 @@ A full-stack web application for managing customer information, built with the M
 
 ## Screenshots
 
-![Home](screenshots\HomePage1.JPG)
+![Home](/screenshots/HomePage1.JPG)
 *HomePage*
 
-![Dashboard](screenshots\Dashboard.JPG)
+![Dashboard](/screenshots/Dashboard.JPG)
 *Dashboard showing user info*
 
-![Dashboard](screenshots\CustomersList.JPG)
+![Dashboard](/screenshots/CustomersList.JPG)
 *Dashboard showing customer list*
 
-![Add Customer](screenshots\CreateCustomer.JPG)
+![Add Customer](/screenshots/CreateCustomer.JPG)
 *Add new customer form*
 
-![Customer Details](screenshots\CustomerDetails1.JPG)
-![Customer Details](screenshots\CustomerDetails2.JPG)
+![Customer Details](/screenshots/CustomerDetails1.JPG)
+![Customer Details](/screenshots/CustomerDetails2.JPG)
 *Detailed customer information view*
 
 ## Installation
