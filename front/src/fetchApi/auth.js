@@ -46,3 +46,13 @@ export const fetchCurrentUser = async () => {
     throw error; // Propagate the error if any
   }
 };
+
+export const refreshAccessToken = async () => {
+  try {
+    const response = await api.post("/auth/refresh-token");
+    return response.data;
+  } catch (error) {
+    console.error("Token refresh error:", error);
+    throw error.response?.data || { message: error.message };
+  }
+};

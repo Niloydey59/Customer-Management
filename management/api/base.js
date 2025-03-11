@@ -1,6 +1,7 @@
+// api/base.js
 import axios from "axios";
 
-const API_URL = "http://localhost:3001/api"; // Backend URL
+const API_URL = "http://192.168.31.90:3001/api"; // Use your computer's IP address instead of localhost
 
 const api = axios.create({
   baseURL: API_URL,
@@ -8,25 +9,9 @@ const api = axios.create({
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
+    "x-platform": "mobile", // Add this to identify mobile requests
   },
 });
-
-// Add request interceptor to inject token dynamically
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("accessToken");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-// Response interceptor for global error handling
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    return Promise.reject(handleApiError(error)); // Use handleApiError here
-  }
-);
 
 // Error handler function
 export const handleApiError = (error) => {

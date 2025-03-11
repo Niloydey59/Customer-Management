@@ -9,6 +9,7 @@ const { jwtAccessKey, jwtRefreshKey } = require("../secret");
 
 const userLogin = async (req, res, next) => {
   try {
+    console.log("Request Body: ", req.body);
     //email and password from request body
     const { email, password } = req.body;
 
@@ -24,32 +25,88 @@ const userLogin = async (req, res, next) => {
       throw createError(400, "Invalid credentials! Please try again.");
     }
 
-    //isBanned
+    // Create user object without sensitive data for token
+    const userForToken = {
+      _id: user._id,
+      email: user.email,
+      username: user.username,
+      displayName: user.displayName || user.username,
+      phone: user.phone,
+    };
+
     //generate token, cookie
     //create jwt
-    const accesstoken = createJSONWebToken({ user }, jwtAccessKey, "15m");
-    const refreshtoken = createJSONWebToken({ user }, jwtRefreshKey, "7d");
+    const accessToken = createJSONWebToken(
+      { userForToken },
+      jwtAccessKey,
+      "15m"
+    );
+    const refreshToken = createJSONWebToken(
+      { userForToken },
+      jwtRefreshKey,
+      "7d"
+    );
 
-    res.cookie("access_token", accesstoken, {
-      maxAge: 15 * 60 * 1000, // 15 minutes
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-    });
-
-    res.cookie("refresh_token", refreshtoken, {
+    // Set refresh token in HTTP-only cookie (for both web and mobile)
+    res.cookie("refresh_token", refreshToken, {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       httpOnly: true,
       secure: true,
       sameSite: "none",
     });
 
-    //success response
     return successResponse(res, {
       statusCode: 200,
-      message: "Users logged in succesfully!",
-      payload: { user },
+      message: "User logged in successfully!",
+      payload: {
+        user: userForToken,
+        accessToken, // Always include accessToken in response for both web and mobile
+      },
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const refreshAccessToken = async (req, res, next) => {
+  try {
+    // Get refresh token from cookie
+    const refreshToken = req.cookies.refresh_token;
+
+    if (!refreshToken) {
+      throw createError(401, "Refresh token not found");
+    }
+
+    // Verify refresh token
+    try {
+      const decoded = jwt.verify(refreshToken, jwtRefreshKey);
+      const userFromToken = decoded.user;
+
+      // Generate new access token
+      const newAccessToken = createJSONWebToken(
+        { user: userFromToken },
+        jwtAccessKey,
+        "15m"
+      );
+
+      // Return new access token
+      return successResponse(res, {
+        statusCode: 200,
+        message: "New access token generated successfully",
+        payload: {
+          accessToken: newAccessToken,
+        },
+      });
+    } catch (error) {
+      // If refresh token is invalid, clear it
+      res.clearCookie("refresh_token", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      });
+
+      throw createError(401, "Invalid or expired refresh token");
+    }
   } catch (error) {
     next(error);
   }
@@ -58,7 +115,6 @@ const userLogin = async (req, res, next) => {
 const userLogout = async (req, res, next) => {
   try {
     //clear cookie
-    res.clearCookie("access_token");
     res.clearCookie("refresh_token");
     //success response
     return successResponse(res, {
@@ -74,7 +130,9 @@ const userLogout = async (req, res, next) => {
 const getCurrentUser = async (req, res, next) => {
   try {
     //get user from request
+    console.log("Request User: ", req.user);
     const user = req.user;
+    console.log("User: ", user);
     //console.log("Current User: ", user);
     //remove password from user
     user.password = undefined;
@@ -93,4 +151,5 @@ module.exports = {
   userLogin,
   userLogout,
   getCurrentUser,
+  refreshAccessToken,
 };
