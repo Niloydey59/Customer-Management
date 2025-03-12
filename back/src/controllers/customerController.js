@@ -21,6 +21,8 @@ const getCustomers = async (req, res, next) => {
       SalesPerson = "",
     } = req.query;
 
+    //console.log("On getCustomers", req.query);
+
     // Build filter object
     const filter = {};
 

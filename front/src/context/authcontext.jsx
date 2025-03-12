@@ -19,9 +19,10 @@ export const AuthProvider = ({ children }) => {
   // Function to decode JWT and set user
   const decodeAndSetUser = (token) => {
     try {
+      console.log("Decoding token...");
       const decoded = jwtDecode(token);
-      console.log("Decoded token:", decoded);
-      setUser(decoded.userForToken);
+      //console.log("Decoded token:", decoded);
+      setUser(decoded.user);
       return decoded;
     } catch (error) {
       console.error("Error decoding token:", error);
@@ -58,10 +59,12 @@ export const AuthProvider = ({ children }) => {
       if (isTokenExpired(token)) {
         try {
           // Try to refresh the token
+          console.log("Token expired, refreshing...");
           const response = await refreshAccessToken();
           const newToken = response.payload.accessToken;
           localStorage.setItem("accessToken", newToken);
           decodeAndSetUser(newToken);
+          console.log("Token refreshed successfully");
         } catch (error) {
           console.error("Token refresh failed:", error);
           localStorage.removeItem("accessToken");
@@ -82,13 +85,13 @@ export const AuthProvider = ({ children }) => {
     try {
       const data = await signInUser(credentials); // Call the login API
 
-      const { accessToken } = data.payload; // Get the access token from the response
+      const { accessToken } = data; // Get the access token from the response
       localStorage.setItem("accessToken", accessToken); // Store the token in local storage
 
       // Decode token and set user
       decodeAndSetUser(accessToken);
 
-      console.log("Login successful and context set ", data.payload.user);
+      console.log("Login successful and context set ", data.user);
 
       navigate("/"); // Redirect to another page after login
 

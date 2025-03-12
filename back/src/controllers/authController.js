@@ -1,5 +1,6 @@
 const createError = require("http-errors"); // error-handling middleware
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const User = require("../models/userModel");
 
@@ -9,7 +10,7 @@ const { jwtAccessKey, jwtRefreshKey } = require("../secret");
 
 const userLogin = async (req, res, next) => {
   try {
-    console.log("Request Body: ", req.body);
+    //console.log("Request Body: ", req.body);
     //email and password from request body
     const { email, password } = req.body;
 
@@ -37,12 +38,12 @@ const userLogin = async (req, res, next) => {
     //generate token, cookie
     //create jwt
     const accessToken = createJSONWebToken(
-      { userForToken },
+      { user: userForToken },
       jwtAccessKey,
-      "15m"
+      "1m"
     );
     const refreshToken = createJSONWebToken(
-      { userForToken },
+      { user: userForToken },
       jwtRefreshKey,
       "7d"
     );
@@ -60,7 +61,7 @@ const userLogin = async (req, res, next) => {
       message: "User logged in successfully!",
       payload: {
         user: userForToken,
-        accessToken, // Always include accessToken in response for both web and mobile
+        accessToken: accessToken, // Always include accessToken in response for both web and mobile
       },
     });
   } catch (error) {
@@ -70,8 +71,11 @@ const userLogin = async (req, res, next) => {
 
 const refreshAccessToken = async (req, res, next) => {
   try {
+    console.log("Refreshing access token...");
     // Get refresh token from cookie
+    console.log("Request Cookies: ", req.cookies);
     const refreshToken = req.cookies.refresh_token;
+    console.log("Refresh Token: ", refreshToken);
 
     if (!refreshToken) {
       throw createError(401, "Refresh token not found");
@@ -86,7 +90,7 @@ const refreshAccessToken = async (req, res, next) => {
       const newAccessToken = createJSONWebToken(
         { user: userFromToken },
         jwtAccessKey,
-        "15m"
+        "1m"
       );
 
       // Return new access token
@@ -98,13 +102,7 @@ const refreshAccessToken = async (req, res, next) => {
         },
       });
     } catch (error) {
-      // If refresh token is invalid, clear it
-      res.clearCookie("refresh_token", {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-      });
-
+      console.error("Error verifying refresh token:", error);
       throw createError(401, "Invalid or expired refresh token");
     }
   } catch (error) {

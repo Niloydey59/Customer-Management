@@ -16,8 +16,8 @@ export const signUpUser = async (userData) => {
 export const signInUser = async (userData) => {
   try {
     const response = await api.post("/auth/login", userData);
-    console.log("User signed in successfully:", response);
-    return response.data;
+    console.log("User signed in successfully:", response.data.payload);
+    return response.data.payload;
   } catch (error) {
     console.error(error.message);
     throw error;

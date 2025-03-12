@@ -13,7 +13,8 @@ import {
   SafeAreaView,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { signUpUser } from "../api/auth";
+
+import { signUpUser } from "../../api";
 
 const RegisterScreen = ({ navigation }) => {
   const [formData, setFormData] = useState({

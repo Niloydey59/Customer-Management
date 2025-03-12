@@ -10,23 +10,40 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useAuthMob } from "../context/AuthContext";
+
+import { useAuth } from "../context/AuthContext";
 
 const HomeScreen = ({ navigation }) => {
-  const { user, logout } = useAuthMob();
+  const { user, logout } = useAuth();
   const [isLoggingOut, setIsLoggingOut] = React.useState(false);
 
   const handleLogout = async () => {
     try {
       setIsLoggingOut(true);
       await logout();
-      navigation.replace("Login");
     } catch (error) {
       Alert.alert("Logout Failed", error.message || "Something went wrong");
     } finally {
       setIsLoggingOut(false);
     }
   };
+
+  // Add this safety check
+  if (!user) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.content}>
+          <Text style={styles.errorText}>User information not available</Text>
+          <TouchableOpacity
+            style={styles.logoutButton}
+            onPress={() => logout()}
+          >
+            <Text style={styles.logoutButtonText}>Back to Login</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -193,6 +210,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     marginLeft: 8,
+  },
+  errorText: {
+    fontSize: 18,
+    color: "#dc3545",
+    marginBottom: 24,
+    textAlign: "center",
   },
 });
 

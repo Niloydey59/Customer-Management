@@ -13,13 +13,13 @@ import {
   ActivityIndicator,
   SafeAreaView,
 } from "react-native";
-import { signInUser, welcomeMessege } from "../api/auth";
+import { signInUser, welcomeMessege } from "../../api/auth";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import { useAuthMob } from "./../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const LoginScreen = ({ navigation }) => {
-  const { login } = useAuthMob();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -41,7 +41,6 @@ const LoginScreen = ({ navigation }) => {
     try {
       const response = await login({ email, password });
       setLoading(false);
-      navigation.replace("Home");
     } catch (error) {
       setLoading(false);
       Alert.alert("Login Failed", error.message || "Invalid credentials");
@@ -55,10 +54,14 @@ const LoginScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={{ flex: 1 }}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
       >
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          keyboardShouldPersistTaps="handled"
+        >
           <View style={styles.logoContainer}>
             <Text style={styles.logoText}>Customer Management</Text>
           </View>
@@ -154,7 +157,8 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flexGrow: 1,
-    justifyContent: "center",
+    paddingTop: 50, // Use fixed padding instead of justifyContent
+    paddingBottom: 50,
   },
   logoContainer: {
     alignItems: "center",
