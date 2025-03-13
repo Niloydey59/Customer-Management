@@ -1,7 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { jwtDecode } from "jwt-decode"; // Make sure to install: npm install jwt-decode
-import { signInUser, signOutUser, refreshAccessToken } from "../api/auth";
+import {
+  signInUser,
+  signOutUser,
+  refreshAccessToken,
+  fetchCurrentUser,
+} from "../api/auth";
 import api from "../api/base";
 
 const AuthContext = createContext();
@@ -38,46 +43,22 @@ export const AuthProvider = ({ children }) => {
 
   // Load user from token on app start
   useEffect(() => {
-    const loadUserFromToken = async () => {
+    const getCurrentUser = async () => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
-        const token = await AsyncStorage.getItem("accessToken");
-
-        if (!token) {
-          setIsLoading(false);
-          return;
-        }
-
-        // Check if token is expired
-        if (isTokenExpired(token)) {
-          try {
-            // Try to refresh token
-            console.log("Token expired, trying to refresh...");
-            const response = await refreshAccessToken();
-            const newToken = response.payload.accessToken;
-
-            // Store new token
-            await AsyncStorage.setItem("accessToken", newToken);
-
-            // Decode and set user from new token
-            decodeAndSetUser(newToken);
-          } catch (error) {
-            console.error("Failed to refresh token:", error);
-            await AsyncStorage.removeItem("accessToken");
-            setUser(null);
-          }
-        } else {
-          // Token is valid, decode and set user
-          decodeAndSetUser(token);
-        }
+        const response = await fetchCurrentUser();
+        console.log("Current user response:", response);
+        const user = response.payload.user;
+        setUser(user);
+        console.log("Current user set:", user);
       } catch (error) {
-        console.error("Error loading user:", error);
+        console.error("Failed to fetch user:", error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    loadUserFromToken();
+    getCurrentUser();
   }, []);
 
   const login = async (credentials) => {
@@ -86,10 +67,11 @@ export const AuthProvider = ({ children }) => {
       const response = await signInUser(credentials);
       console.log("Login successful");
 
-      const { accessToken, user } = response.payload;
+      const { accessToken, refreshToken, user } = response.payload;
 
       // Store access token
       await AsyncStorage.setItem("accessToken", accessToken);
+      await AsyncStorage.setItem("refreshToken", refreshToken);
 
       // Decode and set user
       decodeAndSetUser(accessToken);
@@ -110,6 +92,7 @@ export const AuthProvider = ({ children }) => {
     } finally {
       // Always clear token and user
       await AsyncStorage.removeItem("accessToken");
+      await AsyncStorage.removeItem("refreshToken");
       setUser(null);
     }
   };
@@ -117,14 +100,23 @@ export const AuthProvider = ({ children }) => {
   // Function to manually refresh token
   const handleRefreshToken = async () => {
     try {
-      const response = await refreshAccessToken();
+      const refreshToken = await AsyncStorage.getItem("refreshToken");
+      if (!refreshToken) {
+        throw new Error("No refresh token found");
+      }
+
+      if (isTokenExpired(refreshToken)) {
+        console.log("Refresh token expired, user must login again");
+        throw new Error("Refresh token expired");
+      }
+
+      console.log("Refreshing token...");
+      const response = await refreshAccessToken(refreshToken);
       const newToken = response.payload.accessToken;
 
+      // Store new token
       await AsyncStorage.setItem("accessToken", newToken);
-
-      decodeAndSetUser(newToken);
       console.log("Token refreshed successfully");
-      return newToken;
     } catch (error) {
       console.error("Manual token refresh failed:", error);
       await AsyncStorage.removeItem("accessToken");
@@ -146,7 +138,6 @@ export const AuthProvider = ({ children }) => {
       return handleRefreshToken();
     }
     console.log("Token is valid so returning it");
-    return token;
   };
 
   return (

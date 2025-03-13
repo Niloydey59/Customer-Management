@@ -24,26 +24,18 @@ const isLoggedIn = async (req, res, next) => {
       throw createError(401, "Invalid access token format");
     }
 
-    try {
-      console.log("User is logged in and found token");
-      //console.log("Access Token: ", accessToken);
-      // Verify the access token
-      const decoded = jwt.verify(accessToken, jwtAccessKey);
+    console.log("User is logged in and found token");
+    //console.log("Access Token: ", accessToken);
+    // Verify the access token
+    const decoded = jwt.verify(accessToken, jwtAccessKey);
 
-      // Set user in request
-      req.user = decoded.user;
-      console.log("Access token verified and user set in request");
-      //console.log("User Data: ", req.user);
+    // Set user in request
+    req.user = decoded.user;
+    console.log("Access token verified and user set in request");
+    //console.log("User Data: ", req.user);
 
-      // Proceed to the next middleware
-      next();
-    } catch (error) {
-      if (error.name === "TokenExpiredError") {
-        console.log("Token expired");
-        throw createError(401, "Token expired");
-      }
-      throw createError(401, "Invalid token");
-    }
+    // Proceed to the next middleware
+    next();
   } catch (error) {
     next(error);
   }

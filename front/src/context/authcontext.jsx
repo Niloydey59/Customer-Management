@@ -46,36 +46,17 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const getCurrentUser = async () => {
       setLoading(true);
-      console.log("Checking for token...");
-      const token = localStorage.getItem("accessToken");
-      console.log("Token found: ", token);
-
-      if (!token) {
+      try {
+        const response = await fetchCurrentUser();
+        console.log("Current user response:", response);
+        const user = response.payload.user;
+        setUser(user);
+        console.log("Current user set:", user);
         setLoading(false);
-        return;
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+        setLoading(false);
       }
-
-      // Token exists but might be expired
-      if (isTokenExpired(token)) {
-        try {
-          // Try to refresh the token
-          console.log("Token expired, refreshing...");
-          const response = await refreshAccessToken();
-          const newToken = response.payload.accessToken;
-          localStorage.setItem("accessToken", newToken);
-          decodeAndSetUser(newToken);
-          console.log("Token refreshed successfully");
-        } catch (error) {
-          console.error("Token refresh failed:", error);
-          localStorage.removeItem("accessToken");
-          setUser(null);
-        }
-      } else {
-        // Token is still valid
-        decodeAndSetUser(token);
-      }
-
-      setLoading(false);
     };
     getCurrentUser();
   }, []);
@@ -111,7 +92,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     // Clear token and user regardless of API response
-    localStorage.removeItem("accessToken");
+    await localStorage.removeItem("accessToken");
     setUser(null);
 
     // Redirect to login page

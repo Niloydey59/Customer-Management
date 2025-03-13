@@ -67,7 +67,6 @@ const CustomerListScreen = ({ navigation }) => {
   }, []);
 
   const loadFilterOptions = async () => {
-    getValidAccessToken();
     try {
       const options = await getFilterOptions();
       if (options) {
@@ -120,7 +119,6 @@ const CustomerListScreen = ({ navigation }) => {
   };
 
   const fetchCustomers = async (params = {}) => {
-    getValidAccessToken();
     try {
       setLoading(true);
 
@@ -191,6 +189,10 @@ const CustomerListScreen = ({ navigation }) => {
       page: page,
     }));
     // The useEffect will handle fetching
+  };
+
+  const handleAddCustomer = () => {
+    navigation.navigate("CustomerForm");
   };
 
   const renderItem = ({ item }) => (
@@ -276,6 +278,9 @@ const CustomerListScreen = ({ navigation }) => {
             size={24}
             color="#4a6cfa"
           />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.addButton} onPress={handleAddCustomer}>
+          <MaterialIcons name="add" size={24} color="#fff" />
         </TouchableOpacity>
       </View>
 
@@ -385,6 +390,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: "#4a6cfa",
+    marginRight: 8, // Add spacing between filter and add button
+  },
+  addButton: {
+    width: 40,
+    height: 40,
+    backgroundColor: "#4a6cfa",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
   },
   summaryContainer: {
     flexDirection: "row",

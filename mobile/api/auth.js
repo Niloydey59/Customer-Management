@@ -3,6 +3,7 @@ import api from "./base";
 export const signInUser = async (userData) => {
   try {
     const response = await api.post("/auth/login", userData);
+    //console.log("response data", response.data);
     return response.data;
   } catch (error) {
     console.error("SignIn error:", error.response?.data || error.message);
@@ -20,9 +21,11 @@ export const signOutUser = async () => {
   }
 };
 
-export const refreshAccessToken = async () => {
+export const refreshAccessToken = async (refreshToken) => {
   try {
-    const response = await api.post("/auth/refresh-token");
+    const response = await api.post("/auth/refresh-token", { refreshToken });
+
+    //console.log("response data", response.data);
     return response.data;
   } catch (error) {
     console.error(
@@ -33,7 +36,7 @@ export const refreshAccessToken = async () => {
   }
 };
 
-export const getCurrentUser = async () => {
+export const fetchCurrentUser = async () => {
   try {
     const response = await api.get("/auth/current-user");
     return response.data;

@@ -4,7 +4,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 // Import screens
 import ProfileScreen from "../screens/Dashboard/ProfileScreen";
-import CustomerListScreen from "../screens/Customers/CustomerListScreen";
+import CustomerStack from "./CustomerStack"; // Update import
 
 const Tab = createBottomTabNavigator();
 
@@ -36,9 +36,11 @@ const BottomTabNavigator = () => {
       }}
     >
       <Tab.Screen
-        name="Customers"
-        component={CustomerListScreen}
+        name="CustomerStack"
+        component={CustomerStack}
         options={{
+          headerShown: false, // Hide header as CustomerStack will handle its own headers
+          tabBarLabel: "Customers",
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="people" size={size} color={color} />
           ),

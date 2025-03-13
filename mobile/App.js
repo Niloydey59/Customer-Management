@@ -45,10 +45,14 @@ const AppNavigator = () => {
         }}
       >
         {user ? (
-          // User is signed in
-          <Stack.Screen name="Main" component={BottomTabNavigator} />
+          <Stack.Screen
+            name="Main"
+            component={BottomTabNavigator}
+            options={{
+              headerShown: false,
+            }}
+          />
         ) : (
-          // User is not signed in
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />

@@ -35,6 +35,8 @@ const userLogin = async (req, res, next) => {
       phone: user.phone,
     };
 
+    const isMobile = req.headers["x-platform"] === "mobile";
+    console.log("Is Mobile: ", isMobile);
     //generate token, cookie
     //create jwt
     const accessToken = createJSONWebToken(
@@ -56,12 +58,16 @@ const userLogin = async (req, res, next) => {
       sameSite: "none",
     });
 
+    //console.log(res);
+    console.log(`Login request from ${isMobile ? "mobile" : "web"} client`);
+
     return successResponse(res, {
       statusCode: 200,
       message: "User logged in successfully!",
       payload: {
         user: userForToken,
         accessToken: accessToken, // Always include accessToken in response for both web and mobile
+        ...(isMobile && { refreshToken }), // Include refreshToken in response only for
       },
     });
   } catch (error) {
@@ -72,10 +78,19 @@ const userLogin = async (req, res, next) => {
 const refreshAccessToken = async (req, res, next) => {
   try {
     console.log("Refreshing access token...");
+    const isMobile = req.headers["x-platform"] === "mobile";
+    console.log("Is Mobile: ", isMobile);
+    //console.log("Request Body: ", req.body);
     // Get refresh token from cookie
-    console.log("Request Cookies: ", req.cookies);
-    const refreshToken = req.cookies.refresh_token;
-    console.log("Refresh Token: ", refreshToken);
+    //console.log("Request Cookies: ", req.cookies);
+    let refreshToken;
+    if (isMobile) {
+      console.log("Mobile Request");
+      refreshToken = req.body.refreshToken;
+    } else {
+      refreshToken = req.cookies.refresh_token;
+    }
+    //console.log("Refresh Token: ", refreshToken);
 
     if (!refreshToken) {
       throw createError(401, "Refresh token not found");
